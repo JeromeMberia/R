@@ -39,30 +39,317 @@ df<- read.csv('C:/Users/Admin/Downloads/advertising.csv')
 head(df)
 ```
 
-Number of columns
+##Number of columns
 ```{r}
 ncol(df)
 ```
 
-number of rows 
+##number of rows 
 ```{r}
 nrow(df)
 ```
-A summary of the datasets
+## A summary of the datasets
 ```{r}
 summary(df)
 ```
+## Top six records in dataset
+```{r}
+head(df)
+```
+
+## Bottom six records in the dataset
+```{r}
+tail(df)
+```
+
+
+```{r}
+colnames(df)
+```
+# Data Cleaning
+## Duplicate 
+```{r}
+duplicated_rows <- df[duplicated(df),]
+nrow(duplicated_rows)
+```
+```{r}
+nrow(df)
+df <- df[!duplicated(df), ]
+nrow(df)
+```
+We didn't encounter any duplicate records in our dataset.
+
+## Missing Values
+```{r}
+colSums(is.na(df))
+```
+We did encounter any missing value within dataset. 
+
+## Outliers
+```{r}
+boxplot(df$Daily.Time.Spent.on.Site, main = "Daily Time Spent on Site")
+boxplot(df$Age, main = 'Age')
+boxplot(df$Area.Income, main = 'The User\'s Income')
+boxplot(df$Daily.Internet.Usage, main = 'Daily Internet Usage')
+```
+### This are the are outliers in the column Area.Income
+```{r}
+boxplot.stats(df$Area.Income)$out
+```
+
+## Changing Timestamp column from a character column to a datetime column 
+```{r}
+df$Timestamp <- ymd_hms(df$Timestamp)
+```
+
+## Changing the column name
+```{r}
+names(df)[names(df) == "Male"] <- "Gender"
+colnames(df)
+```
+
+## Changing the values from numbers to charaters 
+```{r}
+df$Gender <- as.character(df$Gender)
+df$Gender[df$Gender == "0"] <- "Female"
+df$Gender[df$Gender == "1"] <- "Male"
+unique(df$Gender)
+```
+
+```{r}
+df$Clicked.on.Ad <- as.character(df$Clicked.on.Ad)
+df$Clicked.on.Ad[df$Clicked.on.Ad == "0"] <- "No"
+df$Clicked.on.Ad[df$Clicked.on.Ad == "1"] <- "Yes"
+unique(df$Clicked.on.Ad)
+```
+
+
+
+
+
+```{r}
+#devtools::install_github("tidyverse/lubridate")
+```
+```{r}
+library(lubridate, warn.conflicts = FALSE)
+```
+
+
+## Adding new column:
+### month
+```{r}
+df$month <- month(df$Timestamp, label = TRUE)
+df$month <- as.character(df$month)
+unique(df$month)
+```
+
+### hour
+```{r}
+df$hour <- hour(df$Timestamp)
+hours <- unique(df$hour)
+sort(hours)
+print("Number of unique values in the column hour")
+sum(hours)
+```
+ 
+### Day of the week
+```{r}
+df$day.of.the.week <- wday(df$Timestamp, label = TRUE)
+unique(df$day.of.the.week)
+```
+
+### date
+```{r}
+
+
+df$date <- date(df$Timestamp)
+
+```
+
 
 ```{r}
 head(df)
 ```
 
 
+## Univariate Analysis
+### Mean
+#### Daily.Time.Spent.on.Site
 ```{r}
-tail(df)
+Daily_Time_1 <- mean(df$Daily.Time.Spent.on.Site)
+Daily_Time_1
+```
+
+#### Age
+```{r}
+Age_3 <- mean(df$Age)
+Age_3
+```
+
+#### Area.Income
+```{r}
+area_income_2 <- mean(df$Area.Income)
+area_income_2
+```
+
+#### Daily.Internet.Usage
+```{r}
+Usage_2 <- mean(df$Daily.Internet.Usage)
+Usage_2
 ```
 
 
+### Median
+#### Daily.Time.Spent.on.Site
+```{r}
+Daily_Time <- median(df$Daily.Time.Spent.on.Site)
+Daily_Time
+```
+
+#### Age
+```{r}
+Age_2 <- median(df$Age)
+Age_2
+```
+
+#### Area.Income
+```{r}
+area_income_2 <- median(df$Area.Income)
+area_income_2
+```
+
+#### Daily.Internet.Usage
+```{r}
+Usage_1 <- median(df$Daily.Internet.Usage)
+Usage_1
+```
+
+
+### Mode
+
+```{r}
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+```
+
+#### Age
+```{r}
+age_1 <- getmode(df$Age)
+print(age_1)
+```
+
+#### Daily.Time.Spent.on.Site
+```{r}
+time_spent <- getmode(df$Daily.Time.Spent.on.Site)
+print(time_spent)
+```
+
+#### Area.Income
+```{r}
+Income_1 <- getmode(df$Area.Income)
+print(Income_1)
+```
+
+#### Daily.Internet.Usage
+```{r}
+internet_usage <- getmode(df$Daily.Internet.Usage)
+print(internet_usage)
+```
+
+#### Ad.Topic.Line
+```{r}
+topic_1 <- getmode(df$Ad.Topic.Line)
+print(topic_1)
+```
+
+#### City
+```{r}
+city_1 <- getmode(df$City)
+print(city_1)
+```
+
+
+#### Country
+```{r}
+country_1 <- getmode(df$Country)
+print(country_1)
+```
+
+#### Gender
+```{r}
+gender_1 <- getmode(df$Gender)
+print(gender_1)
+```
+
+#### Clicked.on.Ad
+```{r}
+clicked_1 <- getmode(df$Clicked.on.Ad)
+print(clicked_1)
+```
+
+#### month
+```{r}
+month_1 <- getmode(df$month)
+print(month)
+```
+
+#### day.of.the.week
+```{r}
+day_of_the_week <- getmode(df$day.of.the.week)
+print(day_of_the_week)
+```
+
+#### hour
+```{r}
+hour_1 <- getmode(df$hour)
+print(hour_1)
+```
+
+#### month
+```{r}
+result <- getmode(df$month)
+print(result)
+```
+
+```{r}
+hist_age <- df[df$Clicked.on.Ad == "Yes",]
+# Create the histogram.
+hist(hist_age$Age, main = "Age", xlab = "Age", col = "grey",border = "black")
+```
+
+```{r}
+hist_age <- df[df$Clicked.on.Ad == "No",]
+# Create the histogram.
+hist(hist_age$Age, main = "Age", xlab = "Age", col = "grey",border = "black")
+```
+
+```{r}
+hist_spent <- df[df$Clicked.on.Ad == "Yes",]
+# Create the histogram.
+hist(hist_spent$Daily.Time.Spent.on.Site, main = "Daily Time Spent on Site",  xlab = "Daily Time Spent on Site",col = "grey",border = "black")
+```
+
+```{r}
+hist_spent <- df[df$Clicked.on.Ad == "No",]
+# Create the histogram.
+hist(hist_spent$Daily.Time.Spent.on.Site, main = "Daily Time Spent on Site",  xlab = "Daily Time Spent on Site",col = "grey",border = "black")
+```
+
+```{r}
+hist_spent <- df[df$Clicked.on.Ad == "Yes",]
+# Create the histogram.
+hist(hist_spent$Area.Income, main = "User\'s Income",  xlab = "Daily Time Spent on Site",col = "grey",border = "black")
+```
+
+```{r}
+hist_spent <- df[df$Clicked.on.Ad == "No",]
+# Create the histogram.
+hist(hist_spent$Area.Income, main = "User\'s Income",  xlab = "Daily Time Spent on Site",col = "grey",border = "black")
+```
+
+### Bivariate Analyisis
 
 ```{r}
 colnames(df)
@@ -70,190 +357,84 @@ colnames(df)
 
 
 ```{r}
-df$Timestamp <- ymd_hms(df$Timestamp)
+# Alternatively, install just ggplot2:
+# install.packages("ggplot2")
+
+# Or the development version from GitHub:
+# install.packages("devtools")
+
+#devtools::install_github("tidyverse/ggplot2")
+```
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+a <- df[df$Clicked.on.Ad == "Yes",]
+b = df[df$Clicked.on.Ad=="No",]
+LGI_1 <- ggplot() + geom_line(aes(y=Daily.Time.Spent.on.Site, x=date), 
+                            size=0.1, 
+                            colour="red", 
+                            data = a) +
+  geom_line(aes(y=Daily.Time.Spent.on.Site, x=date), 
+            size=0.1, 
+            colour="blue", 
+            data = b)
+
+LGI_1
+```
+
+```{r}
+LGI_1 <- ggplot() + geom_line(aes(y=Area.Income, x=date), 
+                            size=0.1, 
+                            colour="red", 
+                            data = a) +
+  geom_line(aes(y=Area.Income, x=date), 
+            size=0.1, 
+            colour="blue", 
+            data = b)
+
+LGI_1
 ```
 
 
 ```{r}
-df$Male <- as.character(df$Male)
-df$Male[df$Male == "0"] <- "Female"
-df$Male[df$Male == "1"] <- "Male"
-df$Male
+
+LGI_1 <- ggplot() + geom_line(aes(y=Area.Income, x=date), 
+                            size=0.1, 
+                            colour="red", 
+                            data = a) +
+  geom_line(aes(y=Area.Income, x=date), 
+            size=0.1, 
+            colour="blue", 
+            data = b)
+
+LGI_1
 ```
 
 ```{r}
-names(df)[names(df) == "Male"] <- "Gender"
-```
 
+LGI_1 <- ggplot() + geom_line(aes(y=Age, x=date), 
+                            size=0.1, 
+                            colour="red", 
+                            data = a) +
+  geom_line(aes(y=Age, x=date), 
+            size=0.1, 
+            colour="blue", 
+            data = b)
 
-```{r}
-df$Clicked.on.Ad <- as.character(df$Clicked.on.Ad)
-df$Clicked.on.Ad[df$Clicked.on.Ad == "0"] <- "No"
-df$Clicked.on.Ad[df$Clicked.on.Ad == "1"] <- "Yes"
-df$Clicked.on.Ad
-```
-
-
-```{r}
-df$month <- month(df$Timestamp, label = TRUE)
-df$month
-```
- 
-```{r}
-df$hour <- hour(df$Timestamp)
-df$hour
-```
- 
- 
-```{r}
-df$day.of.the.week <- wday(df$Timestamp, label = TRUE)
-df$day.of.the.week
+LGI_1
 ```
 
 ```{r}
-head(df)
+y <- a$hour
+x <- b$Age
+plot(x = x ,y = y,
+   xlab = "Hours",
+   ylab = "Age",
+   main = "Weight vs Milage"
+)
 ```
 
-
-Univariate Analysis
-Mean
-Daily.Time.Spent.on.Site
-```{r}
-Daily_Time_1 <- mean(df$Daily.Time.Spent.on.Site)
-Daily_Time_1
-```
-
-Age
-```{r}
-Age_3 <- mean(df$Age)
-Age_3
-```
-
-Area.Income
-```{r}
-area_income_2 <- mean(df$Area.Income)
-area_income_2
-```
-
-Daily.Internet.Usage
-```{r}
-Usage_2 <- mean(df$Daily.Internet.Usage)
-Usage_2
-```
-
-
-Median
-Daily.Time.Spent.on.Site
-```{r}
-Daily_Time <- median(df$Daily.Time.Spent.on.Site)
-Daily_Time
-```
-
-Age
-```{r}
-Age_2 <- median(df$Age)
-Age_2
-```
-
-Area.Income
-```{r}
-area_income_2 <- median(df$Area.Income)
-area_income_2
-```
-
-Daily.Internet.Usage
-```{r}
-Usage_1 <- median(df$Daily.Internet.Usage)
-Usage_1
-```
-
-
-Mode
-```{r}
-getmode <- function(v) {
-   uniqv <- unique(v)
-   uniqv[which.max(tabulate(match(v, uniqv)))]
-}
-```
-Age
-```{r}
-age_1 <- getmode(df$Age)
-print(age_1)
-```
-
-Daily.Time.Spent.on.Site
-```{r}
-time_spent <- getmode(df$Daily.Time.Spent.on.Site)
-print(time_spent)
-```
-
-Area.Income
-```{r}
-Income_1 <- getmode(df$Income)
-print(Income_1)
-```
-
-Daily.Internet.Usage
-```{r}
-internet_usage <- getmode(df$Daily.Internet.Usage)
-print(internet_usage)
-```
-
-Ad.Topic.Line
-```{r}
-topic_1 <- getmode(df$Ad.Topic.Line)
-print(topic_1)
-```
-
-City
-```{r}
-city_1 <- getmode(df$City)
-print(city_1)
-```
-
-
-Country
-```{r}
-country_1 <- getmode(df$Country)
-print(country_1)
-```
-
-Gender
-```{r}
-gender_1 <- getmode(df$Gender)
-print(gender_1)
-```
-
-Clicked.on.Ad
-```{r}
-clicked_1 <- getmode(df$Clicked.on.Ad)
-print(clicked_1)
-```
-
-month
-```{r}
-month_1 <- getmode(df$month)
-print(month)
-```
-
-day.of.the.week
-```{r}
-day_of_the_week <- getmode(df$day.of.the.week)
-print(day_of_the_week)
-```
-
-hour
-```{r}
-hour_1 <- getmode(df$hour)
-print(hour_1)
-```
-
-
-```{r}
-result <- getmode(df$month)
-print(result)
-```
-
-
-
-
+### Analysis

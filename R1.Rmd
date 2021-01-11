@@ -36,15 +36,16 @@ library(lubridate, warn.conflicts = FALSE)
 
 ```{r}
 df<- read.csv('C:/Users/Admin/Downloads/advertising.csv')
+df1 <- df
 head(df)
 ```
 
-##Number of columns
+## Number of columns
 ```{r}
 ncol(df)
 ```
 
-##number of rows 
+## number of rows 
 ```{r}
 nrow(df)
 ```
@@ -123,15 +124,13 @@ df$Clicked.on.Ad[df$Clicked.on.Ad == "1"] <- "Yes"
 unique(df$Clicked.on.Ad)
 ```
 
-
-
-
-
 ```{r}
+#install.packages("devtools")
+
 #devtools::install_github("tidyverse/lubridate")
 ```
 ```{r}
-library(lubridate, warn.conflicts = FALSE)
+#library(lubridate, warn.conflicts = FALSE)
 ```
 
 
@@ -148,8 +147,6 @@ unique(df$month)
 df$hour <- hour(df$Timestamp)
 hours <- unique(df$hour)
 sort(hours)
-print("Number of unique values in the column hour")
-sum(hours)
 ```
  
 ### Day of the week
@@ -160,15 +157,7 @@ unique(df$day.of.the.week)
 
 ### date
 ```{r}
-
-
 df$date <- date(df$Timestamp)
-
-```
-
-
-```{r}
-head(df)
 ```
 
 
@@ -176,25 +165,25 @@ head(df)
 ### Mean
 #### Daily.Time.Spent.on.Site
 ```{r}
-Daily_Time_1 <- mean(df$Daily.Time.Spent.on.Site)
+Daily_Time_1 <- mean(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
 Daily_Time_1
 ```
 
 #### Age
 ```{r}
-Age_3 <- mean(df$Age)
+Age_3 <- mean(df$Age[df$Clicked.on.Ad=="Yes"])
 Age_3
 ```
 
 #### Area.Income
 ```{r}
-area_income_2 <- mean(df$Area.Income)
+area_income_2 <- mean(df$Area.Income[df$Clicked.on.Ad=="Yes"])
 area_income_2
 ```
 
 #### Daily.Internet.Usage
 ```{r}
-Usage_2 <- mean(df$Daily.Internet.Usage)
+Usage_2 <- mean(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
 Usage_2
 ```
 
@@ -202,25 +191,25 @@ Usage_2
 ### Median
 #### Daily.Time.Spent.on.Site
 ```{r}
-Daily_Time <- median(df$Daily.Time.Spent.on.Site)
+Daily_Time <- median(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
 Daily_Time
 ```
 
 #### Age
 ```{r}
-Age_2 <- median(df$Age)
+Age_2 <- median(df$Age[df$Clicked.on.Ad=="Yes"])
 Age_2
 ```
 
 #### Area.Income
 ```{r}
-area_income_2 <- median(df$Area.Income)
+area_income_2 <- median(df$Area.Income[df$Clicked.on.Ad=="Yes"])
 area_income_2
 ```
 
 #### Daily.Internet.Usage
 ```{r}
-Usage_1 <- median(df$Daily.Internet.Usage)
+Usage_1 <- median(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
 Usage_1
 ```
 
@@ -236,50 +225,50 @@ getmode <- function(v) {
 
 #### Age
 ```{r}
-age_1 <- getmode(df$Age)
+age_1 <- getmode(df$Age[df$Clicked.on.Ad=="Yes"])
 print(age_1)
 ```
 
 #### Daily.Time.Spent.on.Site
 ```{r}
-time_spent <- getmode(df$Daily.Time.Spent.on.Site)
+time_spent <- getmode(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
 print(time_spent)
 ```
 
 #### Area.Income
 ```{r}
-Income_1 <- getmode(df$Area.Income)
+Income_1 <- getmode(df$Area.Income[df$Clicked.on.Ad=="Yes"])
 print(Income_1)
 ```
 
 #### Daily.Internet.Usage
 ```{r}
-internet_usage <- getmode(df$Daily.Internet.Usage)
+internet_usage <- getmode(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
 print(internet_usage)
 ```
 
 #### Ad.Topic.Line
 ```{r}
-topic_1 <- getmode(df$Ad.Topic.Line)
+topic_1 <- getmode(df$Ad.Topic.Line[df$Clicked.on.Ad=="Yes"])
 print(topic_1)
 ```
 
 #### City
 ```{r}
-city_1 <- getmode(df$City)
+city_1 <- getmode(df$City[df$Clicked.on.Ad=="Yes"])
 print(city_1)
 ```
 
 
 #### Country
 ```{r}
-country_1 <- getmode(df$Country)
+country_1 <- getmode(df$Country[df$Clicked.on.Ad=="Yes"])
 print(country_1)
 ```
 
 #### Gender
 ```{r}
-gender_1 <- getmode(df$Gender)
+gender_1 <- getmode(df$Gender[df$Clicked.on.Ad=="Yes"])
 print(gender_1)
 ```
 
@@ -291,33 +280,188 @@ print(clicked_1)
 
 #### month
 ```{r}
-month_1 <- getmode(df$month)
-print(month)
+month_1 <- getmode(df$month[df$Clicked.on.Ad=="Yes"])
+print(month_1)
 ```
 
 #### day.of.the.week
 ```{r}
-day_of_the_week <- getmode(df$day.of.the.week)
+day_of_the_week <- getmode(df$day.of.the.week[df$Clicked.on.Ad=="Yes"])
 print(day_of_the_week)
 ```
 
 #### hour
 ```{r}
-hour_1 <- getmode(df$hour)
+hour_1 <- getmode(df$hour[df$Clicked.on.Ad=="Yes"])
 print(hour_1)
 ```
 
 #### month
 ```{r}
-result <- getmode(df$month)
+result <- getmode(df$month[df$Clicked.on.Ad=="Yes"])
 print(result)
 ```
 
+### Maximum
+#### Area.Income
+```{r}
+Income_2 <- max(df$Area.Income[df$Clicked.on.Ad=="Yes"])
+print(Income_2)
+```
+
+#### Daily.Internet.Usage
+```{r}
+Usage_2 <- max(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
+Usage_2
+```
+
+#### Daily.Time.Spent.on.Site
+```{r}
+time_spent_1 <- max(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
+print(time_spent_1)
+```
+
+#### Age
+```{r}
+a_g_e <- max(df$Age[df$Clicked.on.Ad=="Yes"])
+print(a_g_e)
+```
+
+### Minimum
+#### Area.Income
+```{r}
+Income_3 <- min(df$Area.Income[df$Clicked.on.Ad=="Yes"])
+print(Income_3)
+```
+
+#### Daily.Internet.Usage
+```{r}
+Usage_3 <- min(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
+Usage_3
+```
+
+#### Daily.Time.Spent.on.Site
+```{r}
+time_spent_2 <- min(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
+print(time_spent_2)
+```
+
+#### Age
+```{r}
+a_g_e_1 <- min(df$Age[df$Clicked.on.Ad=="Yes"])
+print(a_g_e_1)
+```
+
+### Range
+#### Area.Income
+```{r}
+Income_2 <- range(df$Area.Income[df$Clicked.on.Ad=="Yes"])
+print(Income_2)
+```
+
+#### Daily.Internet.Usage
+```{r}
+Usage_2 <- range(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
+Usage_2
+```
+
+#### Daily.Time.Spent.on.Site
+```{r}
+time_spent_1 <- range(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
+print(time_spent_1)
+```
+
+#### Age
+```{r}
+a_g_e <- range(df$Age[df$Clicked.on.Ad=="Yes"])
+print(a_g_e)
+```
+
+### Quantile
+#### Area.Income
+```{r}
+Income_2 <- quantile(df$Area.Income[df$Clicked.on.Ad=="Yes"])
+print(Income_2)
+```
+
+#### Daily.Internet.Usage
+```{r}
+Usage_2 <- quantile(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
+Usage_2
+```
+
+#### Daily.Time.Spent.on.Site
+```{r}
+time_spent_1 <- quantile(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
+print(time_spent_1)
+```
+
+#### Age
+```{r}
+a_g_e <- quantile(df$Age[df$Clicked.on.Ad=="Yes"])
+print(a_g_e)
+```
+
+### Variance
+#### Area.Income
+```{r}
+Income_2 <- var(df$Area.Income[df$Clicked.on.Ad=="Yes"])
+print(Income_2)
+```
+
+#### Daily.Internet.Usage
+```{r}
+Usage_2 <- var(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
+Usage_2
+```
+
+#### Daily.Time.Spent.on.Site
+```{r}
+time_spent_1 <- var(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
+print(time_spent_1)
+```
+
+#### Age
+```{r}
+a_g_e <- var(df$Age[df$Clicked.on.Ad=="Yes"])
+print(a_g_e)
+```
+
+### Standard Deviation
+#### Area.Income
+```{r}
+Income_2 <- sd(df$Area.Income[df$Clicked.on.Ad=="Yes"])
+print(Income_2)
+```
+
+#### Daily.Internet.Usage
+```{r}
+Usage_2 <- sd(df$Daily.Internet.Usage[df$Clicked.on.Ad=="Yes"])
+Usage_2
+```
+
+#### Daily.Time.Spent.on.Site
+```{r}
+time_spent_1 <- sd(df$Daily.Time.Spent.on.Site[df$Clicked.on.Ad=="Yes"])
+print(time_spent_1)
+```
+
+#### Age
+```{r}
+a_g_e <- sd(df$Age[df$Clicked.on.Ad=="Yes"])
+print(a_g_e)
+```
+
+
+
+### Histogram
 ```{r}
 hist_age <- df[df$Clicked.on.Ad == "Yes",]
 # Create the histogram.
 hist(hist_age$Age, main = "Age", xlab = "Age", col = "grey",border = "black")
 ```
+
+
 
 ```{r}
 hist_age <- df[df$Clicked.on.Ad == "No",]
@@ -340,16 +484,58 @@ hist(hist_spent$Daily.Time.Spent.on.Site, main = "Daily Time Spent on Site",  xl
 ```{r}
 hist_spent <- df[df$Clicked.on.Ad == "Yes",]
 # Create the histogram.
-hist(hist_spent$Area.Income, main = "User\'s Income",  xlab = "Daily Time Spent on Site",col = "grey",border = "black")
+hist(hist_spent$Area.Income, main = "User\'s Income",  xlab = "User\'s Income",col = "grey",border = "black")
 ```
 
 ```{r}
 hist_spent <- df[df$Clicked.on.Ad == "No",]
 # Create the histogram.
-hist(hist_spent$Area.Income, main = "User\'s Income",  xlab = "Daily Time Spent on Site",col = "grey",border = "black")
+hist(hist_spent$Area.Income, main = "User\'s Income",  xlab = "User\'s Income",col = "grey",border = "black")
 ```
+#### Analyisis:
+1. Most people how spent less time on the site click on click of the ad while those how spent more time didn't click the ad.
+2. Those with a income range around 50000 click on the ad while the those that didn't click most had high salary.
 
 ### Bivariate Analyisis
+Note:
+red: represents Yes
+Blue: represents No
+
+```{r}
+
+df1
+
+df1$Timestamp <- ymd_hms(df1$Timestamp)
+names(df1)[names(df1) == "Male"] <- "Gender"
+names(df1)[names(df1) == "Area.Income"] <- "Income"
+names(df1)[names(df1) == "Daily.Internet.Usage"] <- "Usage"
+names(df1)[names(df1) == "Daily.Time.Spent.on.Site"] <- "Spent"
+df1$month <- month(df1$Timestamp)
+df1$hour <- hour(df1$Timestamp)
+df1$day.of.the.week <- wday(df1$Timestamp)
+cor_df <- df1[, c('day.of.the.week', 'hour', 'month', 'Gender', 'Income', 'Spent', 'Usage', 'Age')]
+#cor_df <- lapply(cor_df, as.numeric)
+res <- cor(cor_df, cor_df)
+round(res, 2)
+
+```
+
+```{r}
+plot(df1$Spent, df1$Usage, main = "Main title",
+     xlab = "X axis title", ylab = "Y axis title",
+     pch = 19, frame = FALSE)
+```
+
+```{r}
+plot(df1$Age, df1$Usage, main = "Age vs usage",
+     xlab = "Age", ylab = "Usage",
+     pch = 19, frame = FALSE)
+```
+
+```{r}
+
+```
+
 
 ```{r}
 colnames(df)
@@ -401,11 +587,11 @@ LGI_1
 
 ```{r}
 
-LGI_1 <- ggplot() + geom_line(aes(y=Area.Income, x=date), 
+LGI_1 <- ggplot() + geom_line(aes(y=Daily.Internet.Usage, x=date), 
                             size=0.1, 
                             colour="red", 
                             data = a) +
-  geom_line(aes(y=Area.Income, x=date), 
+  geom_line(aes(y=Daily.Internet.Usage, x=date), 
             size=0.1, 
             colour="blue", 
             data = b)
@@ -427,14 +613,19 @@ LGI_1 <- ggplot() + geom_line(aes(y=Age, x=date),
 LGI_1
 ```
 
-```{r}
-y <- a$hour
-x <- b$Age
-plot(x = x ,y = y,
-   xlab = "Hours",
-   ylab = "Age",
-   main = "Weight vs Milage"
-)
-```
 
 ### Analysis
+Note:The analysis was consecrate on people who click on the ads
+1. Most users spent 60 or less time on the site.
+2. Most users have an income below 50000.
+3. Most users use an internet usage of below 200
+4. Most users are aged 40 or older.
+
+
+# Conlusion:
+
+1. People how spend 60 or less minutes on the site.
+2. People how are 40 or older.
+3. People living in the city of Lisamouth.
+4. People living in the country of Czech Republic.
+5. Target Females. 
